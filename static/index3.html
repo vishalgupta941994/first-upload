@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hello broadcast</title>
+</head>
+<body>
+
+<label for="name">Name</label>
+<input type="text" id="name">
+<button id="list">Say Hello</button>
+
+<ul id="make">
+</ul>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/
+		socket.io/2.2.0/socket.io.dev.js"></script>
+<script>
+	var socket = io();
+
+document.getElementById("list").addEventListener("click",(e)=>{
+      socket.emit("name",document.getElementById("name").value);
+	});
+
+var addLi = function(message){
+    var li =document.createElement("li");
+    li.appendChild( document.createTextNode(message)  );
+    document.getElementById("make").appendChild(li);  
+};
+
+socket.on("name",   (name)=>{addLi(name)}  );
+socket.on("user.events",  (message)=>{addLi(message)}  );
+
+</script>		
+</body>
+</html>
